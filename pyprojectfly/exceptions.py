@@ -3,3 +3,6 @@ class NotAuthorised(Exception):
 
 class BackendError(Exception):
     pass
+
+class BadRequest(Exception):
+    pass

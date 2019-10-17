@@ -88,3 +88,29 @@ class Client(object):
                 raise pyprojectfly.exceptions.BackendError()
             current_page += 1
         return ret_data
+
+    def get_airport_by_icao(self, icao):
+        url = '%s/airports?search=%s' % (PROJECTFLY_BASE_URL, icao)
+        airport_resp = requests.get(url)
+
+        if airport_resp.status_code == 200:
+            data = airport_resp.json().get('data')
+            if len(data) == 1:
+                return data[0]
+            else:
+                raise pyprojectfly.exceptions.BadRequest()
+        else:
+            raise pyprojectfly.exceptions.BackendError()
+
+    def get_airline_by_icao(self, icao):
+        url = '%s/airlines?search=%s' % (PROJECTFLY_BASE_URL, icao)
+        airline_resp = requests.get(url)
+
+        if airline_resp.status_code == 200:
+            data = airline_resp.json().get('data')
+            if len(data) == 1:
+                return data[0]
+            else:
+                raise pyprojectfly.exceptions.BadRequest()
+        else:
+            raise pyprojectfly.exceptions.BackendError()
